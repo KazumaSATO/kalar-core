@@ -3,5 +3,5 @@
             [clojure.java.io :as io]))
 
 (defn read-config []
-  (println (-> "config.edn" io/resource io/file slurp read-string)))
+  (-> "config.edn" io/resource io/file slurp read-string))
 
