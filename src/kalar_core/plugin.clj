@@ -3,5 +3,5 @@
 (defprotocol KalarPlugin
   (load-plugin [this] "load"))
 
-(defmacro defkalarplugin [name & opts+specs]
+(defmacro defkalar-plugin [name & opts+specs]
   `(def ~name (reify ~@opts+specs)))

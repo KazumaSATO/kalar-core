@@ -10,8 +10,7 @@
   (dorun (for [plugin plugins]
            (let [nmspc (-> (re-seq #"^[^/]*" (str plugin)) first symbol)]
              (require nmspc)
-             (println plugin)
-              (println (plugin/load-plugin (var-get (resolve plugin)) ))))))
+             (plugin/load-plugin (var-get (resolve plugin)))))))
 
 (defn init []
   (let [config (read-config)
@@ -22,5 +21,5 @@
 
 (defroutes handler
   (GET ":prefix{.*}/" [prefix] (redirect (str prefix "/index.html")))
-  (route/resources "/" {:root "_site"})
+  (route/resources "/" {:root (:dest (read-config))})
   (route/not-found "Page not found"))
