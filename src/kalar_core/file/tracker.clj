@@ -1,6 +1,8 @@
 (ns kalar-core.file.tracker
   (:require [clojure.java.io :as io]
-            [clojure.data :as data]))
+            [clojure.data :as data]
+            [kalar-core.config :as config])
+  (:import (clojure.lang PersistentList)))
 
 
 
@@ -13,11 +15,18 @@
      (get-child-map [dir]
        (let [children (.listFiles dir)
              thismap (merge-map children)
-             child-dirs (filter #(.isDirectory %) children)]
+             child-dirs (filter #(and (not (= (.getAbsolutePath (io/file (:dest (config/read-config))))
+                                              (.getAbsolutePath %)))
+                                      (.isDirectory %))  children)]
          (reduce #(merge %1 %2) thismap
                  (for [m child-dirs] (get-child-map m))))
        )]
     (get-child-map (io/file directory))))
+
+  (comment ([^PersistentList lst]
+   (let [a (reduce #(merge %1 %2) {} (for [l lst](create-modtime-map l)))]
+     (println a)
+     a)))
 
 (defn- find-removed [old current]
   (keys (first (data/diff old current))))
