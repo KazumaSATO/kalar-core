@@ -25,7 +25,6 @@
 
   (comment ([^PersistentList lst]
    (let [a (reduce #(merge %1 %2) {} (for [l lst](create-modtime-map l)))]
-     (println a)
      a)))
 
 (defn- find-removed [old current]
