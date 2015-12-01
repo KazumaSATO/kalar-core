@@ -1,6 +1,7 @@
 (ns kalar-core.server
   (:require [kalar-core.config :refer [read-config]]
             [kalar-core.plugin :as plugin]
+            [kalar-core.file.tracker :as tracker]
              [compojure.core :refer [GET defroutes]]
              [compojure.route :as route]
              [ring.util.response :refer [redirect]]
@@ -23,3 +24,13 @@
   (GET ":prefix{.*}/" [prefix] (redirect (str prefix "/index.html")))
   (route/resources "/" {:root (:dest (read-config))})
   (route/not-found "Page not found"))
+
+(def printstamp (tracker/tracking "resources"))
+
+(defn wrap-tracker [handler]
+  (fn [request]
+    (do (printstamp)
+      (handler request))))
+
+
+(def app (wrap-tracker handler))
