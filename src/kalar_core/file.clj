@@ -4,6 +4,7 @@
             [kalar-core.config :as config]))
 
 (defn find-resources-dir []
+  "return the absolute path of resources"
   (.getAbsolutePath (io/file "resources")))
 
 (defn find-dest []
