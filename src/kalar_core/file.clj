@@ -19,4 +19,5 @@
 
 
 (defn get-dst [file-path]
+  "return java.io.File"
   (io/file (find-dest) (str/replace file-path (re-pattern (str "^" (find-resources-dir) "/")) "")))
