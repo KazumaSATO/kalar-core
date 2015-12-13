@@ -1,4 +1,4 @@
-(defproject kalar-core "0.1.2"
+(defproject kalar-core "0.1.3-SNAPSHOT"
   :description "kalar, a static site generator"
   :url "https://github.com/KazumaSATO/kalar-core"
   :license {:name "The MIT License"
