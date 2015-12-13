@@ -1,5 +1,5 @@
-(defproject kalar-core "0.1.1-SNAPSHOT"
-  :description "FIXME: write description"
+(defproject kalar-core "0.1.2"
+  :description "kalar, a static site generator"
   :url "https://github.com/KazumaSATO/kalar-core"
   :license {:name "The MIT License"
             :url "http://opensource.org/licenses/mit-license.php"}
