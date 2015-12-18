@@ -1,6 +1,5 @@
 (ns kalar-core.server
   (:require [kalar-core.config :refer [read-config]]
-            [kalar-core.plugin :as plugin]
             [kalar-core.file.tracker :as tracker]
              [compojure.core :refer [GET defroutes]]
              [compojure.route :as route]
@@ -8,10 +7,9 @@
              ))
 
 (defn- load-plugins []
-  (dorun (for [plugin (-> (read-config) :plugins)]
-           (let [nmspc (-> (re-seq #"^[^/]*" (str plugin)) first symbol)]
-             (require nmspc)
-             (plugin/load-plugin (var-get (resolve plugin)))))))
+  (doseq [plugin (-> (read-config) :plugins)]
+    (require plugin)
+    ((-> (symbol (str plugin "/" 'load-plugin)) resolve var-get))))
 
 (defn init []
   (load-plugins))
